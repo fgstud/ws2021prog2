@@ -1,6 +1,5 @@
-package TcpServer;
+package server;
 
-import javax.print.DocFlavor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -39,4 +38,7 @@ public class Client {
             exception.printStackTrace();
         }
     }
+
+
+
 }
