@@ -41,7 +41,6 @@ public class Client {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int i = 0;
-        String receivedString;
         int read = 0; // the value that was read from the stream is saved here
         do {
             read = is.read(); // saving of the byte from the input stream
