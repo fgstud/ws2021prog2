@@ -1,11 +1,11 @@
-import TcpServer.Client;
+import TcpClient.Client;
 import TcpServer.Server;
 
 import java.io.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 	// write your code here
         /*3.1  Schreiben in eine FileDerFileOutputStreamwird genutzt, um Daten in ein File zu schreiben.
         Schauen wir uns an, wie man einen solchen Stream öffnet:*/
@@ -49,9 +49,9 @@ public class Main {
 
         /* Nun lesen wir aus dem Stream */
 
-        byte[] readBuffer = new byte[100];
+        byte[] readBuffer = new byte[100]; //100 byte langer Stream wird erstellt.
         try {
-            is.read(readBuffer);
+            is.read(readBuffer); // Inputstream liest den readBuffer aus
         } catch (IOException exception) {
             System.err.println("couldn't read data (fatal)");
             System.exit(0);
@@ -98,8 +98,8 @@ public class Main {
         }
 
 
-        Server server = new Server();
-        Client client = new Client();
+        Server server = new Server(3333);
+        Client client = new Client("localhost", 3333);
 
 
     }
