@@ -1,18 +1,17 @@
 package TcpServer;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
     private static final int PORTNUMBER = 3333;
     /**Schlachtplan:
-     * 1- Konstruktor
-     * 2- Main Methode in der klasse an sich
-     * 3. Jar erzeugen **/
+     Der Stream braucht ein Stop-symbol ";"
+     Vor dem Symbol: Name
+     Nach dem Symbol: Datei
+
+      **/
 
 
     private final int PORT; // PORT is the portnumber used for the Server
@@ -38,13 +37,27 @@ public class Server {
         Socket socket = acceptSocket(PORT);
         InputStream is = socket.getInputStream();
         FileOutputStream fos = new FileOutputStream(filename);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
+        char charRead;
+        String filenameInput;
         int read = 0;
         do {
             read = is.read();
+
             if (read != -1) {
+                do {
+                    if ((char) read != ';') {
+                        baos.write(read);
+                    }
+                } while ((char) read != ';');
+
+                FileOutputStream fosInputname = new FileOutputStream(baos.toString() + ".txt");
+                fosInputname.write(read);
+
                 fos.write(read);
             }
+
         } while (read != -1);
     }
 

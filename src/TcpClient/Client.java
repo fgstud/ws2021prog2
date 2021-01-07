@@ -8,6 +8,8 @@ public class Client {
     private static final String INPUTNAME = "localhost";
     private static final int INPUTPORT = 3333;
     private static final String SOMETHING = "something";
+    private static final String OUTPUTFILENAME = "output";
+    private static final String SPLITSYMBOL = ";";
 
     private static final String ERRORMESSAGE_MISSING_HOSTNAME_PORTNUMBER = "Error: Hostname & portnumber missing";
 
@@ -25,6 +27,7 @@ public class Client {
         }
         String hostname = args[0];
         String portnumberString = args[1];
+
         String fileName = null;
 
         int portnumber = Integer.parseInt(portnumberString);
@@ -35,6 +38,7 @@ public class Client {
         if (args.length > 2) {
             fileName = args[2];
         }
+
 
         if (fileName != null) {
             client.copyFile(fileName);
@@ -48,6 +52,8 @@ public class Client {
 
         FileInputStream fis = new FileInputStream(fileName);
         OutputStream os = socket.getOutputStream();
+
+        os.write((OUTPUTFILENAME + SPLITSYMBOL).getBytes());
 
         int read = 0;
 
