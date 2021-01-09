@@ -1,6 +1,5 @@
 package TcpClient;
 
-import javax.print.DocFlavor;
 import java.io.*;
 import java.net.Socket;
 
@@ -8,8 +7,7 @@ public class Client {
     private static final String INPUTNAME = "localhost";
     private static final int INPUTPORT = 3333;
     private static final String SOMETHING = "something";
-    private static final String OUTPUTFILENAME = "output";
-    private static final String SPLITSYMBOL = ";";
+    private static String outputfilename = "you_shouldve_given_me_a_name_father.txt";
 
     private static final String ERRORMESSAGE_MISSING_HOSTNAME_PORTNUMBER = "Error: Hostname & portnumber missing";
 
@@ -39,6 +37,10 @@ public class Client {
             fileName = args[2];
         }
 
+        if (args.length > 3) {
+            outputfilename = args[3];
+        }
+
 
         if (fileName != null) {
             client.copyFile(fileName);
@@ -47,16 +49,20 @@ public class Client {
         }
     }
 
+    private void sendSensorData(long timeStamp, float value, String sensorName) {
+
+    }
+
     private void copyFile(String fileName) throws IOException {
         Socket socket = new Socket(this.name, this.port);
 
         FileInputStream fis = new FileInputStream(fileName);
         OutputStream os = socket.getOutputStream();
+        DataOutputStream daos = new DataOutputStream(os);
 
-        os.write((OUTPUTFILENAME + SPLITSYMBOL).getBytes());
+        daos.writeUTF(outputfilename);
 
         int read = 0;
-
         do {
             read = fis.read();
             if (read != -1) {

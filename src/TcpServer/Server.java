@@ -33,31 +33,24 @@ public class Server {
         }
     }
 
-    private void getFile(String filename) throws IOException {
+    private void getFile(String filename) throws IOException, InterruptedException {
         Socket socket = acceptSocket(PORT);
         InputStream is = socket.getInputStream();
-        FileOutputStream fos = new FileOutputStream(filename);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        char charRead;
-        String filenameInput;
+        DataInputStream dais = new DataInputStream(is);
+        filename = dais.readUTF();
+
+        FileOutputStream fos = new FileOutputStream(filename);
+
         int read = 0;
+        int counter = 0;
         do {
             read = is.read();
-
             if (read != -1) {
-                do {
-                    if ((char) read != ';') {
-                        baos.write(read);
-                    }
-                } while ((char) read != ';');
-
-                FileOutputStream fosInputname = new FileOutputStream(baos.toString() + ".txt");
-                fosInputname.write(read);
-
                 fos.write(read);
+                System.out.println("read bytes: " + counter++);
+                Thread.sleep(10);
             }
-
         } while (read != -1);
     }
 
